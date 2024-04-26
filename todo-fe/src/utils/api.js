@@ -1,7 +1,9 @@
+// local 서버 및 local 몽고디비서버를 사용할 때 이것을 api.js로 설정한다.
+
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_PROXY}/api`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api`,
   headers: {
     "Content-Type": "application/json",
   },
