@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
+const jwtSecretKey = process.env.JWT_SECRET_KEY
 
 const userSchema = Schema(
 	{
@@ -19,5 +22,9 @@ const userSchema = Schema(
 	{timestamps: true}
 )
 
+userSchema.methods.generateToken = function(){
+	const token = jwt.sign({_id: this.id}, jwtSecretKey)
+	return token;
+}
 const User = mongoose.model("User", userSchema)
 module.exports = User
