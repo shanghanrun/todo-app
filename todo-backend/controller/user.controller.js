@@ -47,7 +47,7 @@ userController.loginWithEmail= async(req, res)=>{
 			}
 		}
 	}catch(e){
-		return res.status(400).json({status:'fail', message:e.message})
+		return res.status(409).json({status:'fail', message:e.message})
 	}
 }
 
