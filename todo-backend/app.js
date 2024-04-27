@@ -22,7 +22,7 @@ mongoose.connect(mongoURI).then(()=>{console.log('mongoose connected')})
 	console.log("DB connection fail", err)
 })
 
-app.listen(process.env.PORT || 5001, ()=>{     // process.env.PORT는 aws서버에서 정한 포트
+app.listen(process.env.PORT || 5000, ()=>{     // process.env.PORT는 aws서버에서 정한 포트
 	console.log('server on 5000')
 })
 

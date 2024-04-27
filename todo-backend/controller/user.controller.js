@@ -27,7 +27,10 @@ userController.createUser = async(req, res)=>{
 userController.loginWithEmail= async(req, res)=>{
 	try{
 		const {email,password} = req.body;
-		const user = await User.findOne({email})
+		const user = await User.findOne({email}, {
+			createdAt:0, updatedAt:0, __v:0
+		})
+		console.log('찾은 유저 정보 :', user )
 		if(!user){
 			// 가입한 상태가 아니라는 메시지, 로그인페이지로 리디렉션
 			throw new Error('가입한 상태가 아닙니다. email을 다시 확인해 주세요')

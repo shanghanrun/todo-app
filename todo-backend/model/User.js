@@ -21,9 +21,14 @@ const userSchema = Schema(
 	},
 	{timestamps: true}
 )
+userSchema.methods.toJSON = function(){
+	const obj = this._doc
+	delete obj.password;
+	return obj;
+}
 
 userSchema.methods.generateToken = function(){
-	const token = jwt.sign({_id: this.id}, jwtSecretKey)
+	const token = jwt.sign({_id: this.id}, jwtSecretKey, {expiresIn:'1d'})
 	return token;
 }
 const User = mongoose.model("User", userSchema)
