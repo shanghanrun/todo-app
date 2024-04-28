@@ -51,4 +51,12 @@ userController.loginWithEmail= async(req, res)=>{
 	}
 }
 
+userController.getUser=async(req, res)=>{
+	try{
+		const user = User.findById()
+	}catch(e){
+
+	}
+}
+
 module.exports = userController;
