@@ -3,22 +3,23 @@ const taskController={} // 여러 함수를 가진 객체
 
 taskController.createTask = async (req, res)=>{
 	try{
-		const {task, isDone} = req.body;  //bodyParser가 알아서 읽어 준다. 사실 클라이엔트에서 isDone:false로 자료 넘겨주어야 된다.
-		const newTask = new Task({task, isDone})
+		const {task, isDone } = req.body;  //bodyParser가 알아서 읽어 준다. 사실 클라이엔트에서 isDone:false로 자료 넘겨주어야 된다.
+		const userId = req.userId
+		const newTask = new Task({task, isDone, author: userId})
 		await newTask.save()
 		res.status(200).json({status:'ok', data:newTask})
 	} catch(e){
 		res.status(400).json({status:'fail', error:e})
 	}
-}
+} 
 taskController.getTasks = async(req, res)=>{
 	try{
-		const result = await Task.find().select({__v:0})
+		const taskList = await Task.find().populate('author')
 		// 이미 서버실행할 때 mongoose.connect('mongodb:/...) 했고,
 		// Task = mongoose.model("Task", tasKSchema)해서 
 		// Task는 해당 collection인 'tasks'를 가리키고 있다.
 		// find() 해도 되고, 빈 filter 객체를 넣어도 된다. find({})
-		res.status(200).json({status:'ok', data:result})
+		res.status(200).json({status:'ok', data:taskList})
 	}catch(e){
 		res.status(400).json({status:'fail', error:e})
 	}
