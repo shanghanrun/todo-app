@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
-authController.authenticate =(req, res)=>{
+authController.authenticate =(req, res, next)=>{
 	try{
 		const tokenString = req.headers.authorization
 		console.log('tokenString :', tokenString)
@@ -16,10 +16,10 @@ authController.authenticate =(req, res)=>{
 			if(err){
 				throw new Error('invalid token')
 			}
-			// console.log('payload :', payload)
 			// return res.status(200).json({status:'ok', userId:payload._id})
+			req.userId = payload._id
 		})
-
+		next()
 	} catch(e){
 		return res.status(400).json({status:'fail', message:e.message})
 	}
