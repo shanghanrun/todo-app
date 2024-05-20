@@ -1,15 +1,13 @@
 const express = require('express')
 const router = express.Router()
 
-const taskApi = require('./task.api')
-//task.api.js에서 'router'를 module.exports했지만
-// taskApi 이름으로 받았다.
-// 결국 이것도 동일한 라우터이다.
-const userApi = require('./user.api')
-const replyApi = require('./reply.api')
+const taskRouter = require('./taskRouter')
+//taskRouter.js에서 동일 이름으로 받는다.
+const userRouter = require('./userRouter')
+const replyRouter = require('./replyRouter')
 
-router.use('/tasks', taskApi)
-router.use('/user', userApi)
-router.use('/reply', replyApi)
+router.use('/tasks', taskRouter)
+router.use('/user', userRouter)
+router.use('/reply', replyRouter)
 
 module.exports = router;

@@ -3,9 +3,9 @@ const taskController={} // 여러 함수를 가진 객체
 
 taskController.createTask = async (req, res)=>{
 	try{
-		const {task, isDone } = req.body;  //bodyParser가 알아서 읽어 준다. 사실 클라이엔트에서 isDone:false로 자료 넘겨주어야 된다.
+		const {task} = req.body;  //bodyParser가 알아서 읽어 준다. isDone은 안받아와도 된다.
 		const userId = req.userId
-		const newTask = new Task({task, isDone, author: userId})
+		const newTask = new Task({task, authorId: userId})
 		await newTask.save()
 		res.status(200).json({status:'ok', data:newTask})
 	} catch(e){
@@ -14,7 +14,7 @@ taskController.createTask = async (req, res)=>{
 } 
 taskController.getTasks = async(req, res)=>{
 	try{
-		const taskList = await Task.find().populate('author')
+		const taskList = await Task.find().populate('authorId').populate('repliesId')
 		// 이미 서버실행할 때 mongoose.connect('mongodb:/...) 했고,
 		// Task = mongoose.model("Task", tasKSchema)해서 
 		// Task는 해당 collection인 'tasks'를 가리키고 있다.

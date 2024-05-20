@@ -3,7 +3,7 @@ const {Schema} = mongoose
 
 const replySchema = Schema(
 	{
-		itemId: {
+		taskId: {
 			type:Schema.Types.ObjectId,
 			required:true,
 			ref:"Task"
@@ -12,7 +12,7 @@ const replySchema = Schema(
 			type:String,
 			required: true,
 		},
-		author:{
+		authorId:{
 			type:Schema.Types.ObjectId,
 			required:true,
 			ref:"User"
