@@ -1,13 +1,9 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose
+const User = require('./User.js')
 
 const replySchema = Schema(
 	{
-		taskId: {
-			type:Schema.Types.ObjectId,
-			required:true,
-			ref:"Task"
-		},
 		content: {
 			type:String,
 			required: true,

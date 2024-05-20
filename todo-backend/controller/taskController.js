@@ -14,11 +14,7 @@ taskController.createTask = async (req, res)=>{
 } 
 taskController.getTasks = async(req, res)=>{
 	try{
-		const taskList = await Task.find().populate('authorId').populate('repliesId')
-		// 이미 서버실행할 때 mongoose.connect('mongodb:/...) 했고,
-		// Task = mongoose.model("Task", tasKSchema)해서 
-		// Task는 해당 collection인 'tasks'를 가리키고 있다.
-		// find() 해도 되고, 빈 filter 객체를 넣어도 된다. find({})
+		const taskList = await Task.find().populate('authorId').populate('replyIds')
 		res.status(200).json({status:'ok', data:taskList})
 	}catch(e){
 		res.status(400).json({status:'fail', error:e})
