@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import userStore from "../store/userStore";
 import replyStore from '../store/replyStore'
 
 const Reply = ({replyId}) => {
 	console.log('replyId', replyId)
-	const {replyAuthor, getReplyAuthor, deleteReply, updateReply} = replyStore()
+	const {deleteReply, updateReply} = replyStore()
 	const [editValue, setEditValue] = useState(replyId.content)
 	const [editable, setEditable] = useState(false)
 	const {userInfo} = userStore()
@@ -34,9 +34,6 @@ const Reply = ({replyId}) => {
 	}
 
 	useEffect(()=>{
-		getReplyAuthor(replyId._id)
-		// getReply(replyId._id)
-		// console.log('reply?.author :', reply.author)
 		console.log('userInfo._id :', userInfo._id)
 	},[])
 
@@ -58,18 +55,18 @@ const Reply = ({replyId}) => {
 							style={{width: '500px', marginLeft:'15px'}}
 						/>
 						:
-						<div>by {(replyAuthor)? replyAuthor : ""} </div>
+						<div style={{width:'100px'}}>by {replyId.author} </div>
 					}	
 				</div>
 
 				{ (replyId?.authorId === userInfo._id )?
-					<div>
-						<button style={{marginLeft:'20px'}}
+					<div style={{width:'200px'}}>
+						<Button variant="success" style={{marginLeft:'20px'}}
 							onClick={editReply}
-							className="button-delete">{editable? "저장" : "수정"}</button>
-						<button style={{marginLeft:'20px'}}
+							className="button-delete">{editable? "저장" : "수정"}</Button>
+						<Button variant="danger" style={{marginLeft:'20px'}}
 							onClick={removeReply}
-							className="button-delete">삭제</button>
+							className="button-delete">삭제</Button>
 					</div>
 					: ""
 				}

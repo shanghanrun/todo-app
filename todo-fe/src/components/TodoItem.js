@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import userStore from "../store/userStore";
 import taskStore from '../store/taskStore'
 import ReplyList from "./ReplyList";
@@ -25,7 +25,7 @@ const TodoItem = ({task}) => {
   }
 
   const editItem=()=>{
-    setEditable(true)
+    if(task.authorId._id === userInfo._id)setEditable(true)
   }
 
   const handleInputChange =(e)=>{
@@ -33,6 +33,12 @@ const TodoItem = ({task}) => {
   }
   
   const handleKeyPress = async(e)=>{
+    // if(e.key === 'Escape') { //ESC 인식안됨
+    //   console.log('esc 눌렸음')
+    //   setEditable(false);
+    //   setEditValue(task.content); 
+    //   return;
+    // }
     if(e.key === 'Enter'){
       e.preventDefault()
       await updateTask(task._id,editValue)
@@ -45,7 +51,8 @@ const TodoItem = ({task}) => {
   return (
     <Row>
       <Col xs={12}>
-        <div 
+        <div
+          style={{padding:'0 10px'}} 
           onClick={editItem}
           className={`todo-item ${isDone? 'item-complete': ''}
                     ${editable? 'editable':''}`}          
@@ -54,7 +61,9 @@ const TodoItem = ({task}) => {
             <input 
               type='text' value={editValue}
               onChange={handleInputChange}
-              onKeyPress={handleKeyPress} autoFocus
+              onKeyPress={handleKeyPress}
+              placeholder={task.task}
+              autoFocus
             />
             : <div style={{fontSize:'20px'}}className="todo-content">{task.task}</div>
           }            
@@ -66,12 +75,12 @@ const TodoItem = ({task}) => {
             
               { (task.authorId?._id === userInfo._id) ?
                 <div>
-                  <button 
+                  <Button variant="danger"
                     onClick={deleteItem}
-                    className="button-delete">삭제</button>
-                  <button
+                    className="button-delete">삭제</Button>
+                  <Button
                     onClick={handleDone} 
-                    className="button-done">{isDone? '안끝남' :'끝남'}</button>
+                    className="button-done">{isDone? '안끝남' :'끝남'}</Button>
                 </div>
                 : null
               }

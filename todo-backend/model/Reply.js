@@ -12,6 +12,10 @@ const replySchema = Schema(
 			type:Schema.Types.ObjectId,
 			required:true,
 			ref:"User"
+		},
+		author:{
+			type:String,
+			required:true,
 		}
 	},
 	{ timestamps: true}

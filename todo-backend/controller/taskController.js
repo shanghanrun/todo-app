@@ -23,20 +23,23 @@ taskController.getTasks = async(req, res)=>{
 taskController.updateTask = async(req, res)=>{
 	try{
 		const id = req.params.id;
+		// req.body는 유동적이다. 안들어올 수도 있고 들어올 수도 있다.
+		const {task} = req.body;
+
 		const foundTask = await Task.findOne({_id: id})
 		console.log('찾은 테스크 :', foundTask)
 		let updatedTask;
 
-		if(req.body === undefined){  // req.body가 없는 요청을 하면 isDone을 바꾼다.
+		if(task === undefined){  // req.body가 없는 요청을 하면 isDone을 바꾼다.
 			await Task.updateOne(
 				{_id: id},
 				{ $set: {isDone: !foundTask.isDone}},
 			)
 			updatedTask = await Task.findOne({_id:id})
-		} else if(req.body.task !==undefined){ // req.body에 task 값을 전달한 경우 task바꾼다.
+		} else if(task !==undefined){ // req.body에 task 값을 전달한 경우 task바꾼다.
 			await Task.updateOne(
 				{_id: id},
-				{ $set: {task: req.body.task}},
+				{ $set: {task: task}},
 			)
 			updatedTask = await Task.findOne({_id:id})
 		}

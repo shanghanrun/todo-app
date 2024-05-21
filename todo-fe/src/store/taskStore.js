@@ -23,9 +23,9 @@ const taskStore = create((set, get)=>({
 		}
 	},
 	updateTask:async(taskId, task)=>{
-		// task값이 없음녀 isDone 토글
+		// task값이 없으면 isDone 토글
 		try{
-			const resp = await api.put('/tasks/taskId', {task})
+			const resp = await api.put(`/tasks/${taskId}`, {task})
 			if (resp.status !==200) throw new Error(resp.error)
 			set((state)=>({taskUpdated: !state.taskUpdated}))
 		}catch(e){
@@ -34,7 +34,7 @@ const taskStore = create((set, get)=>({
 	},
 	deleteTask:async(taskId)=>{
 		try{
-			const resp = await api.delete('/tasks/taskId')
+			const resp = await api.delete(`/tasks/${taskId}`)
 			if(resp.status !== 200) throw new Error(resp.error)
 			set((state)=>({taskUpdated: !state.taskUpdated}))
 		}catch(e){
