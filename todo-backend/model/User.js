@@ -34,7 +34,7 @@ userSchema.methods.toJSON = function(){
 }
 
 userSchema.methods.generateToken = function(){
-	const token = jwt.sign({_id: this.id}, jwtSecretKey, {expiresIn:'1d'})
+	const token = jwt.sign({_id: this._id}, jwtSecretKey, {expiresIn:'1d'})
 	return token;
 }
 const User = mongoose.model("User", userSchema)
