@@ -31,17 +31,20 @@ taskController.updateTask = async(req, res)=>{
 		let updatedTask;
 
 		if(task === undefined){  // req.body가 없는 요청을 하면 isDone을 바꾼다.
-			await Task.updateOne(
-				{_id: id},
-				{ $set: {isDone: !foundTask.isDone}},
-			)
-			updatedTask = await Task.findOne({_id:id})
+			// await Task.updateOne(
+			// 	{_id: id},
+			// 	{ $set: {isDone: !foundTask.isDone}},
+			// )
+			// updatedTask = await Task.findOne({_id:id})
+			// 위의 코드를 한번에 하는 방법
+			updatedTask = await findByIdAndUpdate(id, {isDone: !foundTask.isDone}, {new: true})
 		} else if(task !==undefined){ // req.body에 task 값을 전달한 경우 task바꾼다.
-			await Task.updateOne(
-				{_id: id},
-				{ $set: {task: task}},
-			)
-			updatedTask = await Task.findOne({_id:id})
+			// await Task.updateOne(
+			// 	{_id: id},
+			// 	{ $set: {task: task}},
+			// )
+			// updatedTask = await Task.findOne({_id:id})
+			updatedTask = await findByIdAndUpdate(id, {task}, {new:true})
 		}
 		res.status(200).json({status:'ok', data: updatedTask})
 
